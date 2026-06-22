@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy:    #0a1628;
+  --slate:   #1c2f4a;
+  --steel:   #2d4a6b;
+  --horizon: #3d7ab5;
+  --amber:   #f0a500;
+  --lime:    #7ec8a0;
+  --fog:     #b8c8d8;
+  --paper:   #e8f0f8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background-color: var(--navy);
+  color: var(--paper);
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+}
+
+/* Thin scrollbars */
+::-webkit-scrollbar         { width: 4px; height: 4px; }
+::-webkit-scrollbar-track   { background: var(--slate); }
+::-webkit-scrollbar-thumb   { background: var(--horizon); border-radius: 2px; }
+
+/* Utility: mono readout */
+.mono {
+  font-family: "Share Tech Mono", monospace;
+}
