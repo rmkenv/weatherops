@@ -7,7 +7,7 @@ export interface Location {
 }
 
 export const LOCATIONS: Location[] = [
-  { id: "shenandoah", label: "Shenandoah Valley, VA", lat: 38.8462, lon: -78.8653, nwsZone: "VAZ027" }, 
+  { id: "catonsville", label: "Catonsville, MD", lat: 39.2723, lon: -76.7322, nwsZone: "MDZ013" },
   { id: "dc",          label: "Washington, DC",  lat: 38.9072, lon: -77.0369, nwsZone: "DCZ001" },
 ];
 

@@ -15,7 +15,7 @@ export default function AlertsTab({ alerts, allData, units }: Props) {
       <SectionLabel>NWS Active Alerts</SectionLabel>
       {alerts.length === 0 ? (
         <div className="bg-slate rounded-lg px-4 py-8 text-center mb-5">
-          <div className="mono text-lime text-sm tracking-wide">\u2713 NO ACTIVE ALERTS</div>
+          <div className="mono text-lime text-sm tracking-wide">✓ NO ACTIVE ALERTS</div>
           <div className="text-fog text-xs mt-2">No watches, warnings, or advisories in effect</div>
         </div>
       ) : (
@@ -24,7 +24,7 @@ export default function AlertsTab({ alerts, allData, units }: Props) {
             <div key={a.id} className="rounded-r-md px-3 py-2.5 bg-navy"
               style={{ borderLeft: `3px solid ${SEVERITY_COLORS[a.severity] ?? "#b8c8d8"}` }}>
               <div className="mono text-[10px] tracking-widest" style={{ color: SEVERITY_COLORS[a.severity] ?? "#b8c8d8" }}>
-                \u25b2 {a.event?.toUpperCase()} · {a.severity?.toUpperCase()}
+                ▲ {a.event?.toUpperCase()} · {a.severity?.toUpperCase()}
               </div>
               <div className="text-fog text-xs mt-1">{a.headline}</div>
               {a.ends && <div className="mono text-[9px] text-steel mt-1">EXPIRES: {new Date(a.ends).toLocaleString()}</div>}
@@ -51,7 +51,7 @@ export default function AlertsTab({ alerts, allData, units }: Props) {
                 <div className="text-right">
                   <div className="text-fog text-xs">RH {c.relative_humidity_2m}%</div>
                   <div className="text-fog text-xs">{(c.wind_speed_10m * 0.621371).toFixed(0)} mph</div>
-                  {nalert > 0 && <div className="mono text-amber text-xs mt-1">\u25b2 {nalert} ALERT{nalert > 1 ? "S" : ""}</div>}
+                  {nalert > 0 && <div className="mono text-amber text-xs mt-1">▲ {nalert} ALERT{nalert > 1 ? "S" : ""}</div>}
                 </div>
               </div>
             </div>

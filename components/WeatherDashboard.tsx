@@ -6,8 +6,6 @@ import type { Location } from "@/lib/constants";
 import type { WeatherResponse } from "@/services/weather/types";
 import type { NwsAlert } from "@/services/alerts/client";
 import type { UnitSystem } from "@/lib/units";
-import { displayTemp } from "@/lib/units";
-import { getWmo } from "@/lib/constants";
 
 import WaveBackground    from "./ui/WaveBackground";
 import TabNav            from "./ui/TabNav";
@@ -20,15 +18,8 @@ import DerivedTab        from "./tabs/DerivedTab";
 import MapTab            from "./tabs/MapTab";
 import AlertsTab         from "./tabs/AlertsTab";
 
-interface LocationData {
-  loc: Location;
-  weather: WeatherResponse;
-  alerts: NwsAlert[];
-}
-
-interface Props {
-  initialData: LocationData[];
-}
+interface LocationData { loc: Location; weather: WeatherResponse; alerts: NwsAlert[] }
+interface Props { initialData: LocationData[] }
 
 export default function WeatherDashboard({ initialData }: Props) {
   const [activeLocIdx, setActiveLocIdx] = useState(0);
@@ -62,7 +53,6 @@ export default function WeatherDashboard({ initialData }: Props) {
 
   const handleModelChange = (newModel: string) => {
     setModel(newModel);
-    // Refresh all locations with the new model
     LOCATIONS.forEach((l) => refresh(l.id, l.lat, l.lon, newModel));
   };
 
@@ -92,7 +82,7 @@ export default function WeatherDashboard({ initialData }: Props) {
               >
                 {refreshing[loc.id] ? "…" : "↺ REFRESH"}
               </button>
-              <span className="mono text-[9px] text-steel">
+              <span className="mono text-[9px] text-steel hidden sm:block">
                 {new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
               </span>
             </div>
@@ -111,10 +101,12 @@ export default function WeatherDashboard({ initialData }: Props) {
 
       <main className="max-w-4xl mx-auto px-5 py-5">
         {!locData ? (
-          <div className="text-center py-16 mono text-horizon text-xs tracking-widest">ACQUIRING DATA…</div>
+          <div className="text-center py-16 mono text-horizon text-xs tracking-widest animate-pulse">
+            ACQUIRING DATA…
+          </div>
         ) : (
           <>
-            {activeTab === "now"     && <NowTab     wx={locData.weather} alerts={alerts} units={units} />}
+            {activeTab === "now"     && <NowTab     wx={locData.weather} alerts={alerts} units={units} loc={loc} />}
             {activeTab === "hourly"  && <HourlyTab  wx={locData.weather} units={units} />}
             {activeTab === "10-day"  && <TenDayTab  wx={locData.weather} units={units} loc={loc} />}
             {activeTab === "derived" && <DerivedTab wx={locData.weather} units={units} loc={loc} />}
@@ -129,7 +121,7 @@ export default function WeatherDashboard({ initialData }: Props) {
           DATA: OPEN-METEO · NWS · USGS WATERWATCH · NO API KEY REQUIRED
         </span>
         <span className="mono text-[9px] text-steel tracking-widest">
-          IQSPATIAL · @rmkenv · WEATHEROPS v2.0 · MODEL: {model.toUpperCase()}
+          IQSPATIAL · @rmkenv · WEATHEROPS v2.1 · {model.toUpperCase()}
         </span>
       </footer>
     </div>
