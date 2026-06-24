@@ -7,16 +7,16 @@ import type { WeatherResponse } from "@/services/weather/types";
 import type { NwsAlert } from "@/services/alerts/client";
 import type { UnitSystem } from "@/lib/units";
 
-import WaveBackground    from "./ui/WaveBackground";
-import TabNav            from "./ui/TabNav";
-import LocationSwitcher  from "./ui/LocationSwitcher";
-import ModelSelector     from "./ui/ModelSelector";
-import NowTab            from "./tabs/NowTab";
-import HourlyTab         from "./tabs/HourlyTab";
-import TenDayTab         from "./tabs/TenDayTab";
-import DerivedTab        from "./tabs/DerivedTab";
-import MapTab            from "./tabs/MapTab";
-import AlertsTab         from "./tabs/AlertsTab";
+import WaveBackground   from "./ui/WaveBackground";
+import TabNav           from "./ui/TabNav";
+import LocationSwitcher from "./ui/LocationSwitcher";
+import ModelSelector    from "./ui/ModelSelector";
+import NowTab           from "./tabs/NowTab";
+import HourlyTab        from "./tabs/HourlyTab";
+import TenDayTab        from "./tabs/TenDayTab";
+import DerivedTab       from "./tabs/DerivedTab";
+import MapTab           from "./tabs/MapTab";
+import AlertsTab        from "./tabs/AlertsTab";
 
 interface LocationData { loc: Location; weather: WeatherResponse; alerts: NwsAlert[] }
 interface Props { initialData: LocationData[] }
@@ -106,7 +106,15 @@ export default function WeatherDashboard({ initialData }: Props) {
           </div>
         ) : (
           <>
-            {activeTab === "now"     && <NowTab     wx={locData.weather} alerts={alerts} units={units} loc={loc} />}
+            {activeTab === "now"    && (
+              <NowTab
+                wx={locData.weather}
+                alerts={alerts}
+                units={units}
+                loc={loc}
+                onOpenMap={() => setActiveTab("map")}
+              />
+            )}
             {activeTab === "hourly"  && <HourlyTab  wx={locData.weather} units={units} />}
             {activeTab === "10-day"  && <TenDayTab  wx={locData.weather} units={units} loc={loc} />}
             {activeTab === "derived" && <DerivedTab wx={locData.weather} units={units} loc={loc} />}
@@ -118,10 +126,10 @@ export default function WeatherDashboard({ initialData }: Props) {
 
       <footer className="border-t border-slate px-5 py-3 flex justify-between flex-wrap gap-2">
         <span className="mono text-[9px] text-steel tracking-widest">
-          DATA: OPEN-METEO · NWS · USGS WATERWATCH · NO API KEY REQUIRED
+          DATA: OPEN-METEO · NWS · USGS · NO API KEY REQUIRED
         </span>
         <span className="mono text-[9px] text-steel tracking-widest">
-          IQSPATIAL · @rmkenv · WEATHEROPS v2.1 · {model.toUpperCase()}
+          IQSPATIAL · @rmkenv · WEATHEROPS v2.2 · {model.toUpperCase()}
         </span>
       </footer>
     </div>
